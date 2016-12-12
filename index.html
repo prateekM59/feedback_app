@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<title>
+			Feedback gatherer
+		</title>
+		<script type="text/javascript" src="jQuery.js"></script>
+		<script type="text/javascript" src="Underscore.js"></script>
+		<script type="text/javascript" src="Backbone-min.js"></script>
+		<style>
+		</style>
+	</head>
+	<body>
+		<h1>
+			Rate your experience with Egencia
+		</h1>
+		
+		<form id="input-box">
+			<label>
+				Trip ID:
+			</label>
+			<input type="text" name="trip-id" id="trip-id">
+			<label>
+				Comments:
+			</label>
+			<input type="text" name="trip-comments" id="trip-comments">
+			<input type="submit" name="Submit">
+		</form>
+
+		<div id="view">
+		</div>
+		
+		<script type="text/javascript">
+			var app = {};
+
+		</script>
+
+		<script type="text/javascript">
+		    (function($) {
+				$(document).ready(function() {	
+					var postApi = "http://localhost:5000/review";
+
+					$("#input-box").submit(function() {
+
+						var tripId = $("#trip-id").val();
+						var comments = $("#trip-comments").val();
+
+						var data = {
+							"tripId": tripId,
+							"comments": comments
+						};
+
+						$.ajax({url: postApi, type: "POST", data: JSON.stringify(data), contentType: "application/json", success: function(result) {
+							$("#view").html("\n\nThank you for submitting feedback MOFO");
+						}}); 
+
+						return false;
+					});
+				});
+		    })(jQuery);
+		</script>
+
+
+	</body>
+</html

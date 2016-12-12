@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Sentiment Analyzer
+    </title>
+</head>
+<body>
+    <div id="scores" style="width:100%;height:100%"></div>
+
+
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="jQuery.js"></script>
+
+    <script type="text/javascript">
+
+        var getApi = "http://localhost:5000/analysis";
+        $.ajax({url: getApi, type: "GET", success: function(result) {
+            console.log(result);
+            debugger;
+            Highcharts.theme = {
+                colors: ['blue', 'red', 'green'],
+                chart: {
+                    backgroundColor: {
+                        linearGradient: [0, 0, 500, 500],
+                        stops: [
+                            [0, 'rgb(255, 255, 255)'],
+                            [1, 'rgb(240, 240, 255)']
+                        ]
+                    },
+                },
+                title: {
+                    style: {
+                        color: '#000',
+                        font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+                    }
+                },
+                subtitle: {
+                    style: {
+                        color: '#666666',
+                        font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+                    }
+                },
+
+                legend: {
+                    itemStyle: {
+                        font: '9pt Trebuchet MS, Verdana, sans-serif',
+                        color: 'black'
+                    },
+                    itemHoverStyle:{
+                        color: 'gray'
+                    }  
+                }
+            };
+
+            // Apply the theme
+            Highcharts.setOptions(Highcharts.theme);
+            $(function () {
+                var myChart = Highcharts.chart('scores', {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Sentiments'
+                    },
+                    series: [{
+                        name: 'Comments',
+                        colorByPoint: true,
+                        data: [{
+                            name: 'Positive',
+                            y: result.pos
+                        }, {
+                            name: 'Negative',
+                            y: result.neg,
+                            sliced: true,
+                            selected: true
+                        }, {
+                            name: 'Neutral',
+                            y: result.neu
+                        }]
+                    }]
+                });
+            });
+        }});      
+                   
+    </script>
+</body>
+</html>
+
