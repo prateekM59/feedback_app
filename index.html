@@ -6,33 +6,61 @@
 		<script type="text/javascript" src="jQuery.js"></script>
 		<script type="text/javascript" src="Underscore.js"></script>
 		<script type="text/javascript" src="Backbone-min.js"></script>
-		<style>
+		<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<style> 
+			p {
+				text-align: center;
+			}
+
+			#login {
+				margin-top: 250px;
+    			margin-left: 300px;
+			}
 		</style>
 	</head>
 	<body>
-		<h1>
-			Rate your experience with Egencia
-		</h1>
-		
-		<form id="input-box">
-			<label>
-				Trip ID:
-			</label>
-			<input type="text" name="trip-id" id="trip-id">
-			<label>
-				Comments:
-			</label>
-			<input type="text" name="trip-comments" id="trip-comments">
-			<input type="submit" name="Submit">
-		</form>
 
-		<div id="view">
-		</div>
-		
-		<script type="text/javascript">
-			var app = {};
+	<div class="container">
+	  <!-- Trigger the modal with a button -->
+	  <button type="button" id="login" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Login</button>
 
-		</script>
+	  <!-- Modal -->
+	  <div class="modal fade" id="myModal" role="dialog">
+	    <div class="modal-dialog modal-lg">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">Feedback</h4>
+	        </div>
+	        <div class="modal-body">
+	          	<h1 id="modalBody" style="text-align: center">
+					Tell us how was your last trip!!!
+				</h1>
+				
+				<form id="input-box">
+				  <div class="form-group">
+				    <label for="email">Trip ID:</label>
+				    <input class="form-control" id="tripId">
+				  </div>
+				  <div class="form-group">
+				    <label for="comment">What did you like/dislike?</label>
+				    <textarea rows="5" class="form-control" id="comments"></textarea>
+				  </div>
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Not Now</button>
+				  <button type="submit" class="btn btn-default">Submit</button>
+				</form>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
 
 		<script type="text/javascript">
 		    (function($) {
@@ -41,8 +69,8 @@
 
 					$("#input-box").submit(function() {
 
-						var tripId = $("#trip-id").val();
-						var comments = $("#trip-comments").val();
+						var tripId = $("#tripId").val();
+						var comments = $("#comments").val();
 
 						var data = {
 							"tripId": tripId,
@@ -50,7 +78,8 @@
 						};
 
 						$.ajax({url: postApi, type: "POST", data: JSON.stringify(data), contentType: "application/json", success: function(result) {
-							$("#view").html("\n\nThank you for submitting feedback MOFO");
+							$("#input-box").html("");
+							$("#modalBody").text("Thank you for your feedback!!!");
 						}}); 
 
 						return false;
@@ -58,6 +87,7 @@
 				});
 		    })(jQuery);
 		</script>
+
 
 
 	</body>

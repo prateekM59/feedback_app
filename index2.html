@@ -4,10 +4,33 @@
     <title>
         Sentiment Analyzer
     </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+       .container {
+        display: none;
+       } 
+    </style>
 </head>
 <body>
     <div id="scores" style="width:100%;height:100%"></div>
-
+    <div class="container">
+      <h2>Top Positive comments</h2>
+      <div class="list-group">
+        <a href="#" class="list-group-item" id="pos1">First item</a>
+        <a href="#" class="list-group-item" id="pos2">Second item</a>
+      </div>
+    </div>
+    <div class="container">
+      <h2>Top Negative comments</h2>
+      <div class="list-group">
+        <a href="#" class="list-group-item" id="neg1">First item</a>
+        <a href="#" class="list-group-item" id="neg2">Second item</a>
+      </div>
+    </div>
 
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script type="text/javascript" src="jQuery.js"></script>
@@ -17,7 +40,6 @@
         var getApi = "http://localhost:5000/analysis";
         $.ajax({url: getApi, type: "GET", success: function(result) {
             console.log(result);
-            debugger;
             Highcharts.theme = {
                 colors: ['blue', 'red', 'green'],
                 chart: {
@@ -81,6 +103,17 @@
                     }]
                 });
             });
+
+            debugger;
+            
+            $("#pos1").text(result.top_pos[0]);
+            $("#pos2").text(result.top_pos[1]);
+            $("#neg1").text(result.top_neg[0]);
+            $("#neg2").text(result.top_neg[1]);
+            $(".container").css("display","block");
+
+
+
         }});      
                    
     </script>
